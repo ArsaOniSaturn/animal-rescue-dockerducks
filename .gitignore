@@ -426,3 +426,12 @@ FodyWeavers.xsd
 
 # Official VS Code C# Dev Kit Extension exclusion
 #*.lscache
+
+# Local tooling and browser-test output
+.atl/
+.codegraph/
+.gentle/
+playwright-report/
+test-results/
+*.zip
+*Zone.Identifier
