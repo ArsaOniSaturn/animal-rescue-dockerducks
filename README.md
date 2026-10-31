@@ -23,7 +23,7 @@ Aplicación académica para registrar rescates animales y consultar una cola ord
 | Fecha de publicación en Azure | **29 de octubre de 2026** |
 | URL pública HTTPS de Azure | <https://animal-rescue-dockerducks-g0a8a8fteycfc7hc.westus-01.azurewebsites.net/> |
 | Verificación de `/health` en Azure | <https://animal-rescue-dockerducks-g0a8a8fteycfc7hc.westus-01.azurewebsites.net/health> |
-| Video con participación de todos | [ENLACE DEL VIDEO AQUÍ](https://REEMPLAZAR-POR-ENLACE-DEL-VIDEO) |
+| Video con participación de todos | <https://youtu.be/7nCn34XqEmE> |
 | Acceso del docente | Repositorio compartido con el usuario de GitHub `oalarconpe` (invitación por nombre de usuario, no por correo). |
 
 ## Resumen técnico
