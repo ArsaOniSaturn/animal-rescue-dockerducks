@@ -137,15 +137,15 @@ stages:
                         try {
                           $request = @{ TimeoutSec = 15 }
                           $health = Invoke-WebRequest "$base/health" @request
-                          $home = Invoke-WebRequest "$base/" @request
+                          $homeResponse = Invoke-WebRequest "$base/" @request
                           $url = "$base/build-info.json?run=$env:BUILD_BUILDID"
                           $info = Invoke-WebRequest $url @request
                           if ($health.StatusCode -ne 200 -or
                               $health.Content.Trim() -ne 'Healthy') {
                             throw 'Health check failed'
                           }
-                          if ($home.StatusCode -ne 200 -or
-                              $home.Content -notmatch '<html') {
+                          if ($homeResponse.StatusCode -ne 200 -or
+                              $homeResponse.Content -notmatch '<html') {
                             throw 'Home check failed'
                           }
                           $identity = $info.Content | ConvertFrom-Json
