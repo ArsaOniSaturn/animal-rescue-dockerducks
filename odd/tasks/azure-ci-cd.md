@@ -2,7 +2,7 @@
 
 ## Objetivo y límites
 
-Preparar Azure Pipelines CI → artefacto → CD para la práctica final. La rúbrica requiere cambios en main, build/pruebas, artefacto reutilizable y despliegue automático en App Service. No afirmar que el YAML se ejecutó en Azure DevOps sin evidencia real. No hacer commit, push, crear recursos ni autenticarse en servicios durante esta unidad.
+Preparar y demostrar Azure Pipelines CI → artefacto → CD para la práctica final. La rúbrica requiere cambios en main, build/pruebas, artefacto reutilizable y despliegue automático en App Service. No afirmar ejecuciones remotas sin evidencia real. Las restricciones de preparación local de T1 y su estado original se conservan abajo como antecedentes. En la fase remota posterior el estudiante autorizó commit y push a main; el padre gestiona esa entrega, sin force push ni recursos facturables nuevos.
 
 ## T1 — Pipeline y guía de configuración
 
@@ -51,3 +51,59 @@ La fase remota DevOps/Azure requiere configuración y autorización real antes
 de poder declararse funcional. La respuesta pública actual verificada por el
 padre no acredita permisos/configuración Azure ni CD. No hubo commit, push,
 autenticación, creación remota ni deploy.
+
+## T2 — Cambio visible trazable por CI/CD (en curso)
+
+### Punto de partida confirmado
+
+Run automático `20261121.2`, main `f0ea27f305959f4bbd4d02a96dce7339d36fa918`: CI/CD verdes, 100 % de pruebas aprobadas y un artefacto según captura `imagen11.png` en el repositorio académico. GET público `/health` devuelve `Healthy`; `/build-info.json` muestra ese SHA y BuildId `2`. No confundir número de run con BuildId. El encabezado público anterior dice `Cada reporte cuenta.`.
+
+### Comportamiento y aceptación
+
+- Cambiar únicamente el texto H1 de la interfaz a `Cada reporte cuenta. Cada rescate importa.`. No rediseñar, añadir dependencias ni cambiar API, datos o permisos.
+- Conservar el aviso de demostración académica, datos en memoria y no contacto con emergencias, así como IDs y accesibilidad existentes.
+- Añadir una prueba de integración determinista del HTML servido por la aplicación: observar RED por el texto nuevo ausente, modificar el HTML y observar GREEN; ejecutar suite Release y comprobar aviso académico. No simular peticiones externas en tests de CI.
+- Antes del push guardar una evidencia pública de la versión anterior con URL, instante real, HTML/título e identidad; captura browser solo si hay runner/navegador disponible sin instalar. No inventar imágenes ni resultados.
+- Registrar comandos/resultados locales y el alcance de rollback. El éxito local no demuestra CD: después del push se necesita nuevo run automático, artefacto, CD y GET público con nuevo encabezado y SHA/BuildId del mismo run.
+- No redactar guiones todavía. No alterar YAML, infraestructura, secretos ni evidencias históricas.
+
+### Superficies permitidas — T2
+
+- `src/DockerDucks.Api/wwwroot/index.html` (solo texto H1).
+- `tests/DockerDucks.Api.Tests/WebInterfaceTests.cs` (ampliar prueba de HTML servido existente para `/` y `/index.html`; no crear un fixture redundante).
+- `evidencias/ci-cd/README.md` y nuevos archivos `evidencias/ci-cd/u4-antes.json`, `evidencias/ci-cd/u4-antes.png`, `evidencias/ci-cd/u4-despues.json`, `evidencias/ci-cd/u4-despues.png` para evidencia real, sin datos inventados.
+- Esta sección T2 de `odd/tasks/azure-ci-cd.md` para resultados, limitaciones y estado.
+
+El escritor trabaja sin commit ni push; el padre verifica y entrega la unidad. No marcar T2 terminada hasta comprobar el recorrido remoto nuevo y guardar su evidencia.
+
+### Estado local T2 y rollback
+
+Implementado únicamente el nuevo texto H1; teoría de HTML existente ampliada con
+H1 exacto y aviso académico completo para `/` y `/index.html`. IDs, accesibilidad,
+API y pruebas alternativas (assets y ruta API desconocida) preservados.
+
+- RED: `dotnet test DockerDucks.sln --configuration Release --no-restore --filter FullyQualifiedName~Home_serves_the_rescue_interface_in_production`, exit 1,
+  2 fallidas por H1 nuevo ausente, 0 aprobadas.
+- GREEN: mismo comando después del cambio HTML, exit 0, 2 aprobadas,
+  0 fallidas, 0 omitidas.
+- Suite: `dotnet test DockerDucks.sln --configuration Release --no-restore`,
+  exit 0, 17 aprobadas, 0 fallidas, 0 omitidas. Comandos con timeout 30 s,
+  ninguno agotado.
+- Baseline real en `evidencias/ci-cd/u4-antes.json`: GET público `/` observado
+  `2026-11-21T03:30:54.462619+00:00`, status 200, H1 anterior;
+  `/build-info.json` status 200 con SHA `f0ea27f305959f4bbd4d02a96dce7339d36fa918`
+  y BuildId `2`. Se guardaron HTML completo y respuestas reales con sus instantes.
+- Captura antes disponible en [`u4-antes.png`](../../evidencias/ci-cd/u4-antes.png):
+  copia byte-exacta de `Images/imagen12.png` del repositorio académico, revisada
+  por el padre (URL Azure, H1 antiguo y aviso académico). SHA256 origen/destino:
+  `b66bc6f1558c864ef484843084fd5ef8f101d41a62417e46146589266bfaa9ab`.
+  Original intacto; sin instalaciones ni captura simulada. La captura después
+  todavía no existe. Push, nuevo run y CD siguen pendientes; no hay evidencia
+  de un nuevo CD U4.
+
+Rollback propuesto (no ejecutado): revertir de forma coordinada el texto H1 y
+su expectativa de test mediante un cambio revisado por el padre; conservar las
+evidencias históricas y el aviso académico. Un rollback remoto requeriría su
+propio run CI/CD y verificación pública de identidad, no basta el cambio local.
+Pendientes del padre: revisión, entrega y nuevo recorrido remoto con evidencia.
+T1 y sus antecedentes no se modifican en esta unidad.
