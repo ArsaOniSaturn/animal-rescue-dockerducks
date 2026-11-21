@@ -1,6 +1,6 @@
-# CI/CD Azure Pipelines — guía y estado verificado
+# CI/CD con Azure Pipelines
 
-**U4 verificada técnicamente; entrega documental en curso.**
+## Ejecución de referencia
 [Run automático 20261121.3](https://dev.azure.com/dockerducks-animal-rescue/AnimalRescue/_build/results?buildId=3&view=results):
 CI/CD verdes, 17 tests remotos aprobados, 0 fallidos; SHA
 `e515181264bd26c601e56c64ed4d45105af8259a`, BuildId `3`.
@@ -11,12 +11,9 @@ CI/CD verdes, 17 tests remotos aprobados, 0 fallidos; SHA
 | GET públicos: 200, Healthy, H1 nuevo e identidad coincidente | [Respuestas reales](../evidencias/ci-cd/u4-despues.json) |
 | Capturas antes/después, run y 17/17 tests | [Índice de evidencias](../evidencias/ci-cd/README.md) |
 
-La evidencia corresponde a ese SHA, no al futuro HEAD: publicar documentación
-activará otro run. Pendientes: enlace directo del artefacto, acceso docente al
-proyecto privado y GitHub `oalarconpe` (no confirmados), ambos videos, PDF y Teams.
-[Reparto actual acordado](../README.md#equipo-y-responsabilidades-acordadas-para-cicd):
-todos revisan y participan en ambos videos; no implica autoría retrospectiva.
-No se redactan guiones todavía. La entrega IIS/Azure anterior sigue siendo histórica.
+La evidencia corresponde al SHA y BuildId indicados; cada cambio posterior
+produce una ejecución independiente. Las responsabilidades acordadas se describen
+en el [README](../README.md#equipo-y-responsabilidades-acordadas-para-cicd).
 
 ## Contrato del pipeline
 
@@ -45,8 +42,7 @@ no hace rollback; investigar y volver a desplegar un run aprobado.
 
 ## Configuración remota — referencia para revisión o reproducción
 
-El run U4 ya se ejecutó; estos pasos describen el procedimiento, no una lista
-íntegramente pendiente ni una auditoría de permisos privados.
+El procedimiento siguiente permite reproducir la configuración del flujo.
 
 1. Confirmar repositorio GitHub, rama `main`, permisos del equipo y política
    de cambios. Crear proyecto Azure DevOps y pipeline YAML desde repositorio
@@ -78,41 +74,13 @@ El run U4 ya se ejecutó; estos pasos describen el procedimiento, no una lista
    Para despliegue automático no agregar aprobación manual obligatoria;
    si la política institucional la exige, documentar que CD quedará esperando.
    Autorizar environment y service connection antes de exigir automatismo.
-6. Revisar variables YAML propuestas; no suponer que el recurso histórico
-   sigue siendo correcto. Solo entonces habilitar ejecución y realizar cambio
-   autorizado en main. Esta unidad no hace commit, push, login, creación
-   remota ni despliegue. Verificar CI, tests publicados, ZIP descargable,
-   download del mismo run, AzureWebApp y smoke en logs.
+6. Revisar las variables YAML y comprobar el recurso de destino antes de habilitar
+   el flujo. Realizar un cambio en `main` y verificar CI, tests publicados,
+   ZIP descargable, descarga del mismo run, AzureWebApp y smoke en los logs.
 7. Conservar SHA, BuildId, URL del run, nombre del artefacto, resultado del
    environment y JSON público. Si falla autorización, cuota, red o identidad,
    corregir configuración y repetir: no declarar éxito solo por HTTP 200.
-   Consultar [checklist de evidencias](../evidencias/ci-cd/README.md).
-
-## Antecedente T1 — validación local y límites
-
-- `dotnet test DockerDucks.sln --configuration Release --no-restore`:
-  **17 aprobadas, 0 fallidas, 0 omitidas**.
-- `dotnet publish src/DockerDucks.Api/DockerDucks.Api.csproj --configuration
-  Release --no-restore --self-contained false --output
-  /tmp/animal-rescue-local-check/publish`: exit 0; DLL/web.config/wwwroot presentes.
-- Python stdlib empaquetó ZIP sin carpeta raíz, comprobó estructura/JSON,
-  extrajo y sirvió ese paquete en `127.0.0.1:5188`. `/health` → 200 Healthy,
-  `/` → 200 HTML, `/build-info.json` → 200 con SHA
-  `be5e1fe9452029e8f5d98e568d63aa5bbe5b83cc` y BuildId `local-validation`.
-  Identidades alternativas SHA/BuildId distintas no coinciden. Se detuvo
-  únicamente el servidor propio mediante finally. No se modificaron fuentes.
-- En aquella validación, la identidad local representaba HEAD previo, no un
-  run Azure; el YAML aún no estaba publicado. El ZIP local usaba Python,
-  no ArchiveFiles@2. No confundir este antecedente con la evidencia U4 superior.
-- Se validaron con PyYAML los contratos main, tareas, ZIP sin raíz,
-  artefacto del mismo run, gates y smoke SHA/BuildId: PASS. Tras agregar
-  `batch: true`, el editor espera erróneamente string en esa propiedad;
-  Azure Pipelines define batch como boolean. No se cambia a string para
-  satisfacer ese diagnóstico. No hay `pwsh` local: PowerShell y tasks
-  oficiales no se ejecutaron aquí. Un parser no sustituye validación de Azure
-  ni prueba del agente Windows.
-- En la validación local T1 no se revalidó la entrega histórica ni se realizó
-  autenticación en Azure/GitHub; no describe el estado remoto posterior de U4.
+   Consultar el [índice de evidencias](../evidencias/ci-cd/README.md).
 
 ## Referencias oficiales para configuración y revisión
 
