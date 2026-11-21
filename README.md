@@ -4,7 +4,18 @@ Aplicación académica para registrar rescates animales y consultar una cola ord
 
 **Práctica 3 · Despliegue de Software · 2026** · Instituto Tecnológico Metropolitano (ITM)
 
-## Integrantes y responsabilidades
+## Nueva práctica CI/CD — en preparación
+
+Pipeline y [guía de configuración](docs/CI_CD.md) preparados localmente;
+[evidencias CI/CD pendientes](evidencias/ci-cd/README.md). No se ha acreditado
+un run ni despliegue de Azure Pipelines. La respuesta pública actual no prueba CD.
+
+## Antecedente histórico · Práctica 3
+
+Lo que sigue conserva la entrega previa, sus fechas, contribuciones y evidencias;
+no describe resultados ni responsabilidades futuras de la nueva práctica CI/CD.
+
+## Integrantes y responsabilidades (entrega histórica)
 
 | Integrante | Responsabilidad | Contribución realizada |
 | --- | --- | --- |
