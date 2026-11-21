@@ -1,105 +1,104 @@
-# Evidencias CI/CD — verificación técnica U4 y pendientes de entrega
+# Informe de evidencias de integración y entrega continuas
 
-Preparación local no equivale a despliegue Azure Pipelines verificado.
-Las imágenes de `../azure/` y `../iis/` pertenecen a la entrega histórica.
-Guía: [configuración CI/CD](../../docs/CI_CD.md).
+El caso documentado es el run automático `20261121.3`, BuildId `3`,
+commit `e515181264bd26c601e56c64ed4d45105af8259a` de la rama `main`.
+Las capturas y los registros corresponden a ese despliegue, no necesariamente
+a la versión más reciente de la aplicación.
 
-## U4 / T2 — cambio visible verificado públicamente
+- [Ejecución de Azure Pipelines](https://dev.azure.com/dockerducks-animal-rescue/AnimalRescue/_build/results?buildId=3&view=results)
+- [Commit del cambio](https://github.com/ArsaOniSaturn/animal-rescue-dockerducks/commit/e515181264bd26c601e56c64ed4d45105af8259a)
+- [Aplicación pública](https://animal-rescue-dockerducks-g0a8a8fteycfc7hc.westus-01.azurewebsites.net/)
+- [Configuración del flujo](../../docs/CI_CD.md)
 
-Antecedente remoto real: run `20261121.2`, SHA
-`f0ea27f305959f4bbd4d02a96dce7339d36fa918`, BuildId `2`, CI/CD verdes
-según evidencia previa; 100 % aprobado, conteo de pruebas de ese run desconocido.
-No atribuirle las 17 pruebas locales ni confundirlo con un nuevo despliegue U4.
+## Cambio visible y trazabilidad
 
-Baseline público leído el `2026-11-21T03:30:54.462619+00:00`:
-[`u4-antes.json`](u4-antes.json) conserva URL, instantes UTC, status 200 de
-`/` y `/build-info.json`, HTML completo, H1 `Cada reporte cuenta.` e identidad
-SHA/BuildId coincidentes con el antecedente.
-Captura antes disponible: [`u4-antes.png`](u4-antes.png), copia byte-exacta de
-`Images/imagen12.png` del repositorio académico, revisada por el padre: URL Azure,
-H1 antiguo y aviso académico visibles. SHA256 origen/destino coincidente:
-`b66bc6f1558c864ef484843084fd5ef8f101d41a62417e46146589266bfaa9ab`.
-No se modificó el original. Captura después disponible:
-[`u4-despues.png`](u4-despues.png), copia de `Images/imagen14.png` realizada y
-verificada por el padre (cmp exit 0), con URL Azure, H1 nuevo y aviso académico.
-SHA256 reportado por el padre:
-`ad9c26415b77991c31b2dc065d9c6ae99a568f346765d96fef1de012c61a796c`.
-Original académico intacto.
+| Fase | Evidencia | Resultado |
+| --- | --- | --- |
+| Antes del cambio | [Captura](u4-antes.png) · [Registro HTTP](u4-antes.json) | H1 «Cada reporte cuenta.», SHA `f0ea27f305959f4bbd4d02a96dce7339d36fa918`, BuildId `2` |
+| Activación automática | [Run CI/CD](u4-run.png) | `Rolling build triggered`, rama `main`, CI y CD exitosas, un artefacto |
+| Pruebas | [Detalle de tests](u4-tests.png) | 17 aprobadas, 0 fallidas en el run `20261121.3` |
+| Artefacto | [Manifiesto de inspección](u4-artefacto.json) | ZIP de publicación con SHA y BuildId del run `3` |
+| Aplicación publicada | [Captura](u4-despues.png) · [Registro HTTP](u4-despues.json) | H1 «Cada reporte cuenta. Cada rescate importa.», salud e identidad verificadas |
 
-Comandos locales observados (timeout de 30 s, sin timeout alcanzado):
-- `dotnet test DockerDucks.sln --configuration Release --no-restore --filter FullyQualifiedName~Home_serves_the_rescue_interface_in_production`:
-  RED exit 1, 2 fallidas/0 aprobadas por ausencia del nuevo H1 exacto;
-  tras cambiar solo el H1, GREEN exit 0, 2 aprobadas/0 fallidas/0 omitidas.
-- `dotnet test DockerDucks.sln --configuration Release --no-restore`:
-  exit 0, 17 aprobadas/0 fallidas/0 omitidas.
+El antecedente BuildId `2` corresponde al run `20261121.2`. El conteo de
+17 pruebas se acredita para el run `3` mediante la captura de detalle;
+no se infiere del porcentaje de aprobación del run anterior.
 
-Se amplió la teoría existente para `/` y `/index.html`, comprobando H1 y aviso
-académico completo. Se conservan las pruebas de assets y ruta API desconocida.
-### Verificación remota U4
+## Estado inicial de la aplicación
 
-[`u4-run.png`](u4-run.png) es copia byte-exacta de `Images/imagen13.png`;
-cmp exit 0 y SHA256 origen/destino
-`7b77231a17eda2cc6985e44d5846ac5eeee3625a75828176e9bff94b5af76311`.
-Según revisión del padre: run `20261121.3`, `Rolling build triggered`, main
-`e5151812`, CI/CD verdes, 100 % de tests, 1 artefacto; total 2m48s,
-CI 1m54s, CD 40s. El porcentaje por sí solo no demuestra el conteo;
-la captura de detalle [`u4-tests.png`](u4-tests.png), revisada por el padre,
-confirma para `20261121.3`: 17 Total, 17 Passed, 0 Failed, 0 Others,
-0 Tests not reported, 100 %, duración 2s617ms; 1 Test Run Completed/Passed.
-Es copia byte-exacta de `Images/imagen15.png`, cmp exit 0, SHA256 común
-`676fc7a95c7821b98a21d60b407f7c96079b6b838b1af19c77d54382356034a9`.
-El conteo del run `20261121.2` sigue desconocido.
+Antes del cambio, la aplicación publicada mostraba el encabezado
+«Cada reporte cuenta.». El registro HTTP identifica esa versión con
+BuildId `2` y SHA `f0ea27f305959f4bbd4d02a96dce7339d36fa918`.
 
-### ZIP descargado inspeccionado, sin extracción ni ejecución
+![Aplicación en Azure antes del cambio de encabezado](u4-antes.png)
 
-[`u4-artefacto.json`](u4-artefacto.json) registra inspección con Python stdlib
-ZipFile (exit 0) de `animal-rescue-run-3.zip` a
-`2026-11-21T03:53:56.773086+00:00`: 896652 bytes, SHA256
-`75f85214b55a1ddbda98c45d2a023dc20d5cb4550b7657ccba2bf02adcebb6dc`.
-Es directamente el paquete, no un wrapper con ZIP anidado: 17 entradas,
-2973830 bytes expandidos, CRC correcto, sin rutas absolutas/`..`, duplicados
-normalizados ni symlinks; dentro de límites <50 MiB y <2000 entradas.
-DLL, web.config, .deps.json, .runtimeconfig.json, wwwroot/index.html y
-wwwroot/build-info.json están en sus rutas de raíz esperadas. H1 nuevo exacto,
-aviso académico, SHA esperado y BuildId `3` coinciden. El manifiesto conserva
-inventario de rutas, tamaños y CRC; no se añadió ZIP ni binarios a Git.
+*Figura 1. Estado previo de Animal Rescue en su URL pública. Fuente: captura del equipo en Azure App Service.*
 
-GET reales mediante Python stdlib urllib, cada petición con timeout 6 s,
-sin polling ni reintentos: exit 0. [`u4-despues.json`](u4-despues.json) conserva
-respuestas completas, URL, UTC y checks. `/` observado
-`2026-11-21T03:42:45.000512+00:00`; `/health`, `/` y `/build-info.json`
-devuelven 200. Health `Healthy`, H1 `Cada reporte cuenta. Cada rescate importa.`,
-aviso académico presente, SHA `e515181264bd26c601e56c64ed4d45105af8259a` y
-BuildId observado `3`. Todos los checks guardados pasan.
+## Ejecución automática de CI y CD
 
-U4 funciona técnicamente según captura del run y GET público coincidente.
-[Run 20261121.3](https://dev.azure.com/dockerducks-animal-rescue/AnimalRescue/_build/results?buildId=3&view=results):
-URL real suministrada por el usuario. La entrega no está finalizada: faltan
-el enlace directo del artefacto y la comprobación de acceso docente al proyecto
-privado; disponer del enlace del run no demuestra ese acceso. No se redactaron
-guiones ni se hicieron commit/push desde esta unidad.
+El cambio en `main` activó el run `20261121.3`. La captura muestra
+`Rolling build triggered`, el commit `e5151812`, las etapas CI y CD exitosas
+y un artefacto publicado. Esta ejecución vincula el cambio de código con
+la construcción y el despliegue automatizados.
 
-## Checklist por completar con evidencia real
+![Run 20261121.3 con activación automática y etapas CI y CD exitosas](u4-run.png)
 
-- [ ] SHA de main y contribuciones reales de cada integrante, sin atribuir
-  contribuciones futuras usando la tabla histórica.
-- [ ] URL del run Azure DevOps y BuildId; trigger automático tras cambio main.
-- [ ] CI Windows/.NET 8: restore, build Release y resultado de tests.
-- [ ] Artefacto `animal-rescue-web`, ZIP `animal-rescue.zip` descargable;
-  DLL, web.config, wwwroot y build-info.json sin carpeta contenedora.
-- [ ] CD/environment `animal-rescue-azure`: éxito y descarga del mismo run,
-  sin checkout/rebuild; AzureWebApp Windows zipDeploy.
-- [ ] URL pública real, `/health`, `/` y JSON con SHA/BuildId del mismo run;
-  captura de logs del smoke exitoso, no solo página pública histórica.
-- [ ] Video 1: enlace accesible y participación exigida por la rúbrica.
-- [ ] Video 2: enlace accesible y participación exigida por la rúbrica.
-- [ ] PDF final con enlaces, resultados y evidencias exigidas por la rúbrica.
+*Figura 2. Resumen de Azure Pipelines: rama main, activación automática, CI, CD y artefacto. Fuente: captura del equipo en Azure Pipelines.*
 
-Los guiones de ambos videos se prepararán **después de verificar** la
-implementación remota y completar la evidencia pendiente. No hay enlaces ficticios;
-la evidencia U4 nueva se distingue del baseline anterior. Revisar accesibilidad para el docente y ocultar credenciales,
-identificadores personales innecesarios, tokens y pantallas de autenticación.
+## Resultados de las pruebas
 
-Validación local ya realizada: 17 tests Release aprobados, publicación
-framework-dependent, estructura ZIP y smoke del paquete extraído con identidad
-local. Ver resultados y límites en la guía; no acreditan CD Azure.
+El detalle del mismo run registra **17 pruebas aprobadas y 0 fallidas**.
+El 100 % corresponde al porcentaje de aprobación de las pruebas ejecutadas,
+no a la cobertura del código.
+
+![Detalle de las 17 pruebas aprobadas del run 20261121.3](u4-tests.png)
+
+*Figura 3. Resultados de las pruebas automatizadas del run 20261121.3. Fuente: captura del equipo en Azure Pipelines.*
+
+## Artefacto consumido por CD
+
+- Nombre publicado: `animal-rescue-web`; paquete: `animal-rescue.zip`.
+- Tamaño del ZIP inspeccionado: **896652 bytes**; 17 entradas y CRC correcto.
+- SHA-256: `75f85214b55a1ddbda98c45d2a023dc20d5cb4550b7657ccba2bf02adcebb6dc`.
+- Contenido en raíz: DLL, `web.config`, dependencias, runtime y `wwwroot/`.
+- `wwwroot/build-info.json`: SHA `e515181264bd26c601e56c64ed4d45105af8259a`, BuildId `3`.
+
+El manifiesto conserva el inventario de rutas, tamaños y CRC. La CD descarga
+el artefacto del mismo run y lo despliega sin reconstruir la aplicación.
+
+## Verificación de la aplicación publicada
+
+El registro posterior conserva las URL, fechas UTC y respuestas completas:
+`/health`, `/` y `/build-info.json` devolvieron HTTP 200. La salud respondió
+`Healthy`; el HTML contenía el nuevo H1 y el aviso de demostración académica;
+el SHA y BuildId publicados coincidían con los del artefacto.
+
+La interfaz desplegada muestra el encabezado
+**«Cada reporte cuenta. Cada rescate importa.»** y conserva el aviso sobre
+datos en memoria y ausencia de contacto con servicios de emergencia.
+
+![Aplicación publicada en Azure con el encabezado actualizado](u4-despues.png)
+
+*Figura 4. Resultado del despliegue del run 20261121.3 en Azure App Service. Fuente: captura del equipo.*
+
+El contraste con la figura 1 demuestra el cambio visible. Los registros JSON
+complementan las capturas con la identidad de la versión publicada.
+
+## Comprobación pública posterior: BuildId 6
+
+El [registro de salud e identidad](verificacion-build-6.json) conserva HTTP 200
+en `/`, `/health` y `/build-info.json`, respuesta `Healthy`, SHA
+`c07c412e992559ede09fe770e55959e951a193f3` y BuildId `6`. La interfaz mostró
+«Cada reporte cuenta. Los animales tienen voz.». Esta comprobación no acredita
+el conteo de pruebas remotas del run 6 ni reemplaza el caso integral del run 3.
+
+## Conclusión
+
+El caso documentado permite seguir la cadena **commit en main → CI → pruebas →
+artefacto → CD → aplicación publicada**. Las capturas muestran el proceso y el
+cambio visible; el manifiesto y las respuestas HTTP relacionan el paquete
+con la versión desplegada mediante SHA y BuildId.
+
+Las carpetas [Azure](../azure/) e [IIS](../iis/) conservan evidencias de la
+configuración inicial de la práctica 3. No sustituyen las evidencias del
+flujo automático CI/CD descrito aquí.

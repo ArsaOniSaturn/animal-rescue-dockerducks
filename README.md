@@ -2,30 +2,44 @@
 
 Aplicación académica para registrar rescates animales y consultar una cola ordenada por prioridad. Reutiliza la API de la práctica 2 y agrega una interfaz HTML/CSS/JavaScript integrada en ASP.NET Core .NET 8, publicada en **IIS (on-premises)** y en **Azure App Service**, sin Docker ni base de datos.
 
-**Práctica 3 · Despliegue de Software · 2026** · Instituto Tecnológico Metropolitano (ITM)
+**Práctica final CI/CD · Despliegue de Software · 2026** · Instituto Tecnológico Metropolitano (ITM)
 
-## Práctica CI/CD — U4 verificada, entrega en curso
+## Integración y entrega continuas
 
 [Run automático 20261121.3](https://dev.azure.com/dockerducks-animal-rescue/AnimalRescue/_build/results?buildId=3&view=results):
 CI/CD verdes, **17 pruebas remotas aprobadas, 0 fallidas**, BuildId `3`.
-La evidencia U4 corresponde al SHA `e515181264bd26c601e56c64ed4d45105af8259a`,
-no al futuro HEAD documental: publicar esta documentación activará otro run.
+El caso documentado corresponde al SHA `e515181264bd26c601e56c64ed4d45105af8259a`.
+Las capturas y los registros identifican ese despliegue; los commits posteriores
+tienen sus propias ejecuciones.
 
-| Verificación U4 | Evidencia |
+| Verificación del caso CI/CD | Evidencia |
 | --- | --- |
 | ZIP real: 896652 bytes, CRC y estructura raíz correctos; H1 e identidad coincidentes | [Manifiesto](evidencias/ci-cd/u4-artefacto.json) |
 | Azure: `/health` Healthy, H1 nuevo y SHA/BuildId correctos | [GET reales](evidencias/ci-cd/u4-despues.json) · [Aplicación pública](https://animal-rescue-dockerducks-g0a8a8fteycfc7hc.westus-01.azurewebsites.net/) |
-| Capturas antes/después, run y detalle de tests | [Índice de evidencias](evidencias/ci-cd/README.md) |
+| Capturas antes/después, run y detalle de tests | [Informe ilustrado de evidencias](evidencias/ci-cd/README.md) |
 
-Configuración y reproducción: [guía CI/CD](docs/CI_CD.md).
-Pendientes: acceso docente al proyecto privado y GitHub `oalarconpe` no confirmados
-para esta práctica, enlace directo del artefacto, ambos videos, PDF y Teams.
-No se redactan guiones todavía.
+Configuración y reproducción: [guía CI/CD](docs/CI_CD.md). La rama principal es `main`.
+El flujo automático restaura dependencias, compila y ejecuta las pruebas;
+publica `animal-rescue-web/animal-rescue.zip` y despliega ese mismo paquete
+en Azure App Service. El smoke test verifica salud e identidad SHA/BuildId.
+
+### Documentación y resultado publicado
+
+- [Informe de evidencias CI/CD](evidencias/ci-cd/README.md): recorrido con capturas,
+  resultados de pruebas, artefacto y comparación antes/después.
+- [Configuración y reproducción del pipeline](docs/CI_CD.md).
+- [Aplicación en Azure](https://animal-rescue-dockerducks-g0a8a8fteycfc7hc.westus-01.azurewebsites.net/).
+
+La [comprobación pública posterior](evidencias/ci-cd/verificacion-build-6.json)
+registró HTTP 200 en `/`, `/health` y `/build-info.json`, respuesta `Healthy`
+y el commit `c07c412e992559ede09fe770e55959e951a193f3`, BuildId `6`.
+Su encabezado es «Cada reporte cuenta. Los animales tienen voz.».
+Este registro comprueba salud e identidad; las capturas y las 17 pruebas
+remotas del caso principal corresponden al run `20261121.3`.
 
 ### Equipo y responsabilidades acordadas para CI/CD
 
-Responsabilidades desde este acuerdo, **no autoría retrospectiva**.
-Todos revisan su área y participan en **ambos videos**.
+Distribución de responsabilidades para la práctica final:
 
 | Integrante | Responsabilidad actual |
 | --- | --- |
@@ -33,12 +47,13 @@ Todos revisan su área y participan en **ambos videos**.
 | Alejandra Madrid Calderon | CI: restauración, build, 17 tests y resultados. |
 | Paula Andrea Calderon Quintero | CD, Azure, conexión ARM, environment y permisos. |
 | Juan David Velasquez Murillo | Aplicación, cambio visible, ZIP y trazabilidad SHA/BuildId. |
-| Jose David Vasquez Diaz | README, capturas, enlaces, PDF y coordinación de Teams. |
+| Jose David Vasquez Diaz | Documentación técnica, capturas y trazabilidad de evidencias. |
 
 ## Antecedente histórico · Práctica 3
 
-Lo que sigue conserva la entrega previa, sus fechas, contribuciones y evidencias;
-no describe resultados ni responsabilidades futuras de la nueva práctica CI/CD.
+La aplicación y la configuración inicial de IIS y Azure se reutilizan de la práctica 3.
+Las evidencias de las siguientes secciones corresponden a ese antecedente,
+no al despliegue automatizado del run `20261121.3`.
 
 ## Integrantes y responsabilidades (entrega histórica)
 
@@ -50,7 +65,7 @@ no describe resultados ni responsabilidades futuras de la nueva práctica CI/CD.
 | Juan David Velasquez Murillo | Aplicación y `/health` | Interfaz, API, pruebas y preparación de la versión publicable (`dotnet publish` en Release). |
 | Jose David Vasquez Diaz | Documentación y video | README final, organización de las evidencias y coordinación/edición del video. |
 
-## Estado de la entrega
+## Resultados de la práctica 3
 
 | Dato | Estado |
 | --- | --- |
@@ -59,7 +74,7 @@ no describe resultados ni responsabilidades futuras de la nueva práctica CI/CD.
 | Fecha de publicación en Azure | **29 de octubre de 2026** |
 | URL pública HTTPS de Azure | <https://animal-rescue-dockerducks-g0a8a8fteycfc7hc.westus-01.azurewebsites.net/> |
 | Verificación de `/health` en Azure | <https://animal-rescue-dockerducks-g0a8a8fteycfc7hc.westus-01.azurewebsites.net/health> |
-| Video con participación de todos | <https://youtu.be/7nCn34XqEmE> |
+| Video de la práctica 3 (IIS/Azure) | <https://youtu.be/7nCn34XqEmE> |
 | Acceso del docente | Repositorio compartido con el usuario de GitHub `oalarconpe` (invitación por nombre de usuario, no por correo). |
 
 ## Resumen técnico
@@ -257,7 +272,10 @@ animal-rescue-dockerducks/
 ├─ tests/
 │  ├─ DockerDucks.Api.Tests/
 │  └─ browser/
+├─ azure-pipelines.yml
+├─ docs/CI_CD.md
 └─ evidencias/
+   ├─ ci-cd/
    ├─ iis/images/
    └─ azure/images/
 ```

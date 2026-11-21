@@ -1,0 +1,21 @@
+{
+  "recordedAtUtc": "2026-11-21T05:51:52.451414+00:00",
+  "baseUrl": "https://animal-rescue-dockerducks-g0a8a8fteycfc7hc.westus-01.azurewebsites.net",
+  "responses": {
+    "/health": {
+      "status": 200,
+      "body": "Healthy"
+    },
+    "/build-info.json": {
+      "status": 200,
+      "body": "{\r\n  \"buildId\": \"6\",\r\n  \"sha\": \"c07c412e992559ede09fe770e55959e951a193f3\"\r\n}\r\n"
+    },
+    "/": {
+      "status": 200,
+      "h1": [
+        "Cada reporte cuenta. Los animales tienen voz."
+      ]
+    }
+  },
+  "scope": "Comprobación pública de salud e identidad; no acredita resultados de pruebas de Azure Pipelines."
+}
