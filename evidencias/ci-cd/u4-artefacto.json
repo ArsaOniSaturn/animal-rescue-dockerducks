@@ -1,0 +1,134 @@
+{
+  "original_name": "animal-rescue-run-3.zip",
+  "observed_at_utc": "2026-11-21T03:53:56.773086+00:00",
+  "limits": {
+    "bytes_per_level": 52428800,
+    "entries_per_level": 2000
+  },
+  "levels": [
+    {
+      "label": "downloaded wrapper or package",
+      "size_bytes": 896652,
+      "sha256": "75f85214b55a1ddbda98c45d2a023dc20d5cb4550b7657ccba2bf02adcebb6dc",
+      "entries": [
+        {
+          "path": "appsettings.json",
+          "size_bytes": 151,
+          "compressed_bytes": 115,
+          "crc32": "a7d49a2d"
+        },
+        {
+          "path": "DockerDucks.Api.deps.json",
+          "size_bytes": 4904,
+          "compressed_bytes": 1181,
+          "crc32": "67fba0ad"
+        },
+        {
+          "path": "DockerDucks.Api.dll",
+          "size_bytes": 18944,
+          "compressed_bytes": 8197,
+          "crc32": "c1e4b274"
+        },
+        {
+          "path": "DockerDucks.Api.exe",
+          "size_bytes": 151552,
+          "compressed_bytes": 64490,
+          "crc32": "7bdf9060"
+        },
+        {
+          "path": "DockerDucks.Api.pdb",
+          "size_bytes": 24216,
+          "compressed_bytes": 12866,
+          "crc32": "36854db3"
+        },
+        {
+          "path": "DockerDucks.Api.runtimeconfig.json",
+          "size_bytes": 488,
+          "compressed_bytes": 240,
+          "crc32": "e1cde9ae"
+        },
+        {
+          "path": "Microsoft.AspNetCore.OpenApi.dll",
+          "size_bytes": 65360,
+          "compressed_bytes": 31054,
+          "crc32": "1187d532"
+        },
+        {
+          "path": "Microsoft.OpenApi.dll",
+          "size_bytes": 241976,
+          "compressed_bytes": 94917,
+          "crc32": "387245b5"
+        },
+        {
+          "path": "Swashbuckle.AspNetCore.Swagger.dll",
+          "size_bytes": 17920,
+          "compressed_bytes": 8073,
+          "crc32": "0c16db0b"
+        },
+        {
+          "path": "Swashbuckle.AspNetCore.SwaggerGen.dll",
+          "size_bytes": 151040,
+          "compressed_bytes": 60714,
+          "crc32": "419cb316"
+        },
+        {
+          "path": "Swashbuckle.AspNetCore.SwaggerUI.dll",
+          "size_bytes": 2281984,
+          "compressed_bytes": 606573,
+          "crc32": "94f8f5c5"
+        },
+        {
+          "path": "web.config",
+          "size_bytes": 559,
+          "compressed_bytes": 353,
+          "crc32": "45af2e59"
+        },
+        {
+          "path": "wwwroot/",
+          "size_bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000"
+        },
+        {
+          "path": "wwwroot/app.js",
+          "size_bytes": 4910,
+          "compressed_bytes": 1750,
+          "crc32": "c1b708dc"
+        },
+        {
+          "path": "wwwroot/build-info.json",
+          "size_bytes": 78,
+          "compressed_bytes": 77,
+          "crc32": "a31615c3"
+        },
+        {
+          "path": "wwwroot/index.html",
+          "size_bytes": 4493,
+          "compressed_bytes": 1684,
+          "crc32": "4491b93e"
+        },
+        {
+          "path": "wwwroot/styles.css",
+          "size_bytes": 5255,
+          "compressed_bytes": 1676,
+          "crc32": "03d0786b"
+        }
+      ],
+      "safe_paths_no_duplicates_or_symlinks": true,
+      "within_limits": true,
+      "crc_ok": true
+    }
+  ],
+  "checks": {
+    "required_files_at_package_root": true,
+    "h1": true,
+    "academic_notice": true,
+    "sha": true,
+    "build_id": true
+  },
+  "identity": {
+    "buildId": "3",
+    "sha": "e515181264bd26c601e56c64ed4d45105af8259a"
+  },
+  "all_checks_passed": true
+}

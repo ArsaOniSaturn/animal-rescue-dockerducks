@@ -4,11 +4,36 @@ Aplicación académica para registrar rescates animales y consultar una cola ord
 
 **Práctica 3 · Despliegue de Software · 2026** · Instituto Tecnológico Metropolitano (ITM)
 
-## Nueva práctica CI/CD — en preparación
+## Práctica CI/CD — U4 verificada, entrega en curso
 
-Pipeline y [guía de configuración](docs/CI_CD.md) preparados localmente;
-[evidencias CI/CD pendientes](evidencias/ci-cd/README.md). No se ha acreditado
-un run ni despliegue de Azure Pipelines. La respuesta pública actual no prueba CD.
+[Run automático 20261121.3](https://dev.azure.com/dockerducks-animal-rescue/AnimalRescue/_build/results?buildId=3&view=results):
+CI/CD verdes, **17 pruebas remotas aprobadas, 0 fallidas**, BuildId `3`.
+La evidencia U4 corresponde al SHA `e515181264bd26c601e56c64ed4d45105af8259a`,
+no al futuro HEAD documental: publicar esta documentación activará otro run.
+
+| Verificación U4 | Evidencia |
+| --- | --- |
+| ZIP real: 896652 bytes, CRC y estructura raíz correctos; H1 e identidad coincidentes | [Manifiesto](evidencias/ci-cd/u4-artefacto.json) |
+| Azure: `/health` Healthy, H1 nuevo y SHA/BuildId correctos | [GET reales](evidencias/ci-cd/u4-despues.json) · [Aplicación pública](https://animal-rescue-dockerducks-g0a8a8fteycfc7hc.westus-01.azurewebsites.net/) |
+| Capturas antes/después, run y detalle de tests | [Índice de evidencias](evidencias/ci-cd/README.md) |
+
+Configuración y reproducción: [guía CI/CD](docs/CI_CD.md).
+Pendientes: acceso docente al proyecto privado y GitHub `oalarconpe` no confirmados
+para esta práctica, enlace directo del artefacto, ambos videos, PDF y Teams.
+No se redactan guiones todavía.
+
+### Equipo y responsabilidades acordadas para CI/CD
+
+Responsabilidades desde este acuerdo, **no autoría retrospectiva**.
+Todos revisan su área y participan en **ambos videos**.
+
+| Integrante | Responsabilidad actual |
+| --- | --- |
+| Sara Regino Ferraro | GitHub, integración y comprobar acceso GitHub de `oalarconpe`. |
+| Alejandra Madrid Calderon | CI: restauración, build, 17 tests y resultados. |
+| Paula Andrea Calderon Quintero | CD, Azure, conexión ARM, environment y permisos. |
+| Juan David Velasquez Murillo | Aplicación, cambio visible, ZIP y trazabilidad SHA/BuildId. |
+| Jose David Vasquez Diaz | README, capturas, enlaces, PDF y coordinación de Teams. |
 
 ## Antecedente histórico · Práctica 3
 
