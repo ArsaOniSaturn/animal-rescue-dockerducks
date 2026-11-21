@@ -20,7 +20,7 @@ public class WebInterfaceTests
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal("text/html", response.Content.Headers.ContentType?.MediaType);
         Assert.Contains("lang=\"es\"", html);
-        Assert.Contains("<h1 id=\"title\">Cada reporte cuenta. Cada rescate importa.</h1>", html);
+        Assert.Contains("<h1 id=\"title\">Cada reporte cuenta. Los animales tienen voz.</h1>", html);
         Assert.Contains("<strong>Demostración académica.</strong> Los reportes se guardan solo en memoria y se pierden al reiniciar la aplicación. Este sitio no contacta servicios de emergencia.", html);
         Assert.Contains("Registrar rescate", html);
         Assert.Contains("Cola de atención", html);
